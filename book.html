@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Rental Form</title>
+  
+    <style>
+      :root {
+        --light-color: #f0f0f0;
+        --yellow: #ffd700;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: var(--light-color);
+        border-radius: 1rem;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        text-align: center;
+        color: var(--yellow);
+      }
+
+      form {
+        display: grid;
+        gap: 10px;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      input[type="email"],
+      input[type="text"],
+      input[type="number"],
+      input[type="date"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: var(--yellow);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: var(--light-color);
+        color: var(--yellow);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Car Rental Form</h2>
+      <form id="carRentalForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="userEmail" required />
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required />
+
+        <label for="carModel">Car Model:</label>
+        <input type="text" id="carModel" name="carModel" required />
+
+        <label for="maxSpeed">Max Speed:</label>
+        <input type="number" id="maxSpeed" name="maxSpeed" required />
+
+        <label for="carType">Car Type:</label>
+        <input type="text" id="carType" name="carType" required />
+
+        <label for="carColor">Car Color:</label>
+        <input type="text" id="carColor" name="carColor" required />
+
+        <label for="rentStartDate">Rent Start Date:</label>
+        <input type="date" id="rentStartDate" name="rentStartDate" required />
+
+        <label for="rentEndDate">Rent End Date:</label>
+        <input type="date" id="rentEndDate" name="rentEndDate" required />
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <script src="book.js"></script>
+  </body>
+</html>

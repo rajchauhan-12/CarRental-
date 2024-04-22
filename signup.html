@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Signup</title>
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0; 
+}
+
+h2 {
+  text-align: center;
+  color: #333; 
+}
+
+form {
+  margin-top: 20px;
+  text-align: center;
+  justify-content: center;
+  
+}
+
+label {
+  font-weight: bold;
+  color: #333; 
+}
+
+input[type="email"],
+input[type="password"],
+button[type="submit"] {
+
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  align-items: center;
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+}
+
+
+button[type="submit"] {
+  background-color: #ffdd57; 
+  color: #333; 
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #fff350; 
+}
+
+  </style>
+</head>
+<body>
+  <div class="login-form-container"></div>
+  <h2>User Signup</h2>
+  <form id="signupForm" action="/" method="POST">
+    <input type="email"  placeholder="email" id="email" name="email"  required><br>
+    <input type="password" placeholder="password" id="password" name="password"  required ><br>
+    <button type="submit">Signup</button>
+  </form>
+</div>
+<script>
+  function validateForm() {
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !emailRegex.test(email)) {
+      alert("Please enter a valid email address");
+      return false;
+    }
+
+    else if (!password || password.length < 6) {
+      alert("Password must be at least 6 characters long");
+      return false;
+    }
+    else{
+
+      window.location.href = "index.html";
+
+  }
+}
+</script>
+</body>
+</html>

@@ -4,18 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Booking Car Form</title>
- 
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
-   
     body {
-      background-image: url(form\ bg.jpg);
+      background-image: url(g.jpg!sw800);
+
     }
     .form-container {
-      background-color: #266d7b; 
+      background-color: #40767b; 
       padding: 15px;
       border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0px 0px 10px rgba(163, 216, 232, 0.1);
     }
   </style>
 </head>
@@ -40,14 +39,8 @@
             <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
           </div>
           <div class="form-group">
-            <label for="car-type">Car Type:</label>
-            <select class="form-control" id="car-type" required>
-              <option>Select car type</option>
-              <option>Sedan</option>
-              <option>SUV</option>
-              <option>Truck</option>
-              <option>Van</option>
-            </select>
+            <label for="pickup-location">Pickup Location:</label>
+            <input type="text" class="form-control" id="pickup-location" placeholder="Enter pickup location" required>
           </div>
           <div class="form-group">
             <label for="pickup-date">Pickup Date:</label>

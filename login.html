@@ -11,23 +11,39 @@
 </head>
 <body>
     <div class="login-form-container">
-        <form action="">
+        <form id="form"  action="">
             <h3>user login</h3>
-            <input type="e-mail" placeholder="email" class="box">
-            <input type="password" placeholder="password" class="box">
+            <input type="e-mail" id="email"  placeholder="email" class="box">
+            <input type="password" id="password"  placeholder="password" class="box">
             <p>forget your password <a href="#">click here</a></p>
             <!-- <input type="submit" value="login now" class="btn"> -->
-            <a href="index.html" class="btn" >Login now</a>
+            <button type="button" class="btn" onclick="validate()">Login now</button>
+            <!-- <a href="index.html" class="btn" >Login now</a> -->
             <p>or login with</p>
             <div class="buttons">
-                <a href="#" class="btn">google</a>
-                <a href="#" class="btn">facebook</a>
+                <a href="index.html" class="btn">google</a>
+                <a href="index.html" class="btn">facebook</a>
             </div>
-            <p>don't have an account<a href="#">sign up</a></p>
+            <p>don't have an account<a href="signup.html">sign up</a></p>
             <a href="index.html" class="btn" >Back to Home</a>
             
 
         </form>
+       
     </div>
+    <script>
+        function validate(){
+            var email = document.getElementById("email");
+            var password = document.getElementById("password");
+            if(email.value == "" || email.value == null) {
+                alert("Please enter your email");
+            } else if(password.value == "" || password.value == null) {
+                alert("Please enter your password");
+            } else {
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+    
 </body>
 </html>

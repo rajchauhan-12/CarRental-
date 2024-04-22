@@ -19,7 +19,7 @@
     <header class="header">
       <div id="menu-btn" class="fas fa-bars"></div>
 
-      <a href="#" class="logo"><span>max</span>Wheels</a>
+      <a href="#" class="logo"><span>mystic</span>Wheels</a>
 
       <nav class="navbar">
         <a href="#home">Home</a>
@@ -30,9 +30,12 @@
         <a href="contact.html">Contact</a>
       </nav>
       
+      
       <div id="search-bar">
-        <input type="text" id="search-input" placeholder="Search...">
-        <button id="search-btn"><i class="fas fa-search"></i></button>
+        <form action="/api/cars" method="GET">
+          <input type="text" id="search-input" name="q" placeholder="Search...">
+          <button type="submit" id="search-btn"><i class="fas fa-search"></i></button>
+        </form>
       </div>
 
       <div id="login-btn">
@@ -51,7 +54,11 @@
     <section class="home" id="home">
       <h1 class="home-parralax" data-speed="-2">find your car</h1>
       <img class="home-parralax" data-speed="5" src="carslide.jpg" alt="" />
-      <a href="#" class="btn home-parralax" data-speed="7"> explore cars </a>
+   
+      <a href="book.html" class="btn home-parralax" data-speed="7"> Book cars </a>
+
+      <!-- <h1>Search for Cars</h2> -->
+ 
     </section>
 
     <!-- home section ends -->
@@ -130,7 +137,7 @@
               <div class="price">
                   <p>15000/day</p>
                   <button>
-                    <a href="book.html">Book now</a>
+                    <a href="bookcar.html">Book now</a>
                   </button>
               </div>
           </div>
@@ -158,7 +165,7 @@
                   <div class="price">
                       <p>10000/day</p>
                       <button>
-                      <a href="book.html">Book now</a>
+                      <a href="bookcar.html">Book now</a>
                     </button>
 
                   </div>
@@ -183,7 +190,7 @@
                   <div class="price">
                       <p>20000/day</p>
                       <button>
-                        <a href="book.html">Book now</a>
+                        <a href="bookcar.html">Book now</a>
                       </button>
                   </div>
               </div>
@@ -208,7 +215,7 @@
                 <div class="price">
                     <p>20000/day</p>
                     <button>
-                      <a href="book.html">Book now</a>
+                      <a href="bookcar.html">Book now</a>
                     </button>
                 </div>
             </div>
@@ -232,7 +239,7 @@
               <div class="price">
                   <p>16000/day</p>
                   <button>
-                    <a href="book.html">Book now</a>
+                    <a href="bookcar.html">Book now</a>
                   </button>
               </div>
           </div>
@@ -257,7 +264,7 @@
             <div class="price">
                 <p>18000/day</p>
                 <button>
-                  <a href="book.html">Book now</a>
+                  <a href="bookcar.html">Book now</a>
                 </button>
             </div>
         </div>
@@ -288,7 +295,7 @@
     <div class="box">
       <i class="fas fa-car"></i>
       <h3>car rent</h3>
-      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+      <p>Unlock freedom on wheels with hassle-free car rentals tailored to your journey, only a click away.</p>
       <a href="#" class="btn">read more</a>
     
   </div>
@@ -296,7 +303,7 @@
   <div class="box">
     <i class="fas fa-tools"></i>
     <h3>parts repair</h3>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit..</p>
+    <p>Keep your fleet in top condition with prompt parts repair services.ensuring smooth rentals for every customer.</p>
 
   <a href="#" class="btn">read more</a>
 </div>
@@ -304,7 +311,7 @@
 <div class="box">
   <i class="fas fa-car-crash"></i>
   <h3>car insurance</h3>
-  <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+  <p>Secure peace of mind for your car with comprehensive insurance coverage tailored to their needs</p>
 
 <a href="#" class="btn">read more</a>
 </div>
@@ -312,7 +319,7 @@
 <div class="box">
   <i class="fas fa-car-battery"></i>
   <h3>battery </h3>
-  <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+  <p>Boost your car power with battery property maintenance for consistent performance and reliability.</p>
 
 <a href="#" class="btn">read more</a>
 </div>
@@ -320,14 +327,14 @@
 <div class="box">
   <i class="fas fa-gas-pump"></i>
   <h3>oil change</h3>
-  <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit..</p>
+  <p>Keep your car running smoothly with regular maintenance an oil change for peak performance</p>
 <a href="#" class="btn">read more</a>
 </div>
 
 <div class="box">
   <i class="fas fa-headset"></i>
   <h3>24/7 support</h3>
-  <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+  <p>ensuring assistance is just a call or click away, any time, day or night</p>
 <a href="#" class="btn">read more</a>
 </div>
 
@@ -418,8 +425,8 @@
       <h3>quick links</h3>
       <a href="#"><i class="fas fa-phone"></i>+91 8518521741</a>
       <a href="#"><i class="fas fa-phone"></i>+11 4854851855</a>
-      <a href="#"><i class="fas fa-envelope"></i>mystic@gmail.com</a>
-      <a href="#"><i class="fas fa-map-marker-alt"></i>Dehradun , India - 240001</a>
+      <a href="#" class = "small"><i class="fas fa-envelope"></i>mystic@gmail.com</a>
+      <a href="#"><i class="fas fa-map-marker-alt"></i>Dehradun , India</a>
     </div>
 
 

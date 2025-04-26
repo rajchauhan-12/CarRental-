@@ -2,26 +2,36 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/rajchauhan-12/compose.git'
+                git 'https://github.com/rajchauhan-12/CarRental-'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Start Docker Compose') {
             steps {
                 script {
-                    docker.build('compose-app')
+                    echo '🛠️ Starting services using docker-compose...'
+                    sh 'docker-compose down || true'  // Stop any existing containers
+                    sh 'docker-compose up -d'
                 }
             }
         }
 
-        stage('Run Container') {
+        stage('Verify Containers') {
             steps {
-                script {
-                    sh 'docker run -d -p 3000:3000 compose-app'
-                }
+                echo '🔍 Verifying running containers...'
+                sh 'docker ps'
             }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ WordPress app deployed successfully on http://localhost:8000'
+        }
+        failure {
+            echo '❌ Something went wrong during deployment.'
         }
     }
 }

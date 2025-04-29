@@ -1,19 +1,49 @@
 pipeline {
-    agent {
-        label 'docker-agent' // Matches the label you set in Docker template
-    }
-    
+    agent none // No global agent
+
     stages {
+        stage('Checkout') {
+            agent any // Can run on any agent
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Build') {
             agent {
                 docker {
-                    image 'maven:3.8.6-jdk-11' // Example for Java
-                    args '-v $HOME/.m2:/root/.m2' // Cache Maven repo
-                    reuseNode true
+                    image 'maven:3.8.6-jdk-11'
+                    args '-v $HOME/.m2:/root/.m2'
+                    label 'docker-agent' // Uses your Docker cloud
                 }
             }
             steps {
                 sh 'mvn clean package'
+            }
+        }
+
+        stage('Test') {
+            agent {
+                docker {
+                    image 'maven:3.8.6-jdk-11'
+                    args '-v $HOME/.m2:/root/.m2'
+                    label 'docker-agent'
+                }
+            }
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Deploy') {
+            agent {
+                label 'docker-agent'
+            }
+            steps {
+                script {
+                    docker.build("carrental-app:latest")
+                    docker.image('carrental-app:latest').run('-p 3000:3000 --name carrental')
+                }
             }
         }
     }

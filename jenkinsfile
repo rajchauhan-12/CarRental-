@@ -1,49 +1,57 @@
 pipeline {
-    agent none // No global agent
+    agent {
+        label 'docker-agent' // Matches the label in your Docker template
+    }
 
     stages {
         stage('Checkout') {
-            agent any // Can run on any agent
             steps {
                 checkout scm
             }
         }
 
         stage('Build') {
-            agent {
-                docker {
-                    image 'maven:3.8.6-jdk-11'
-                    args '-v $HOME/.m2:/root/.m2'
-                    label 'docker-agent' // Uses your Docker cloud
-                }
-            }
             steps {
-                sh 'mvn clean package'
+                script {
+                    // Build inside a Maven container
+                    docker.image('maven:3.8.6-jdk-11').inside('-v $HOME/.m2:/root/.m2') {
+                        sh 'mvn clean package'
+                    }
+                }
             }
         }
 
         stage('Test') {
-            agent {
-                docker {
-                    image 'maven:3.8.6-jdk-11'
-                    args '-v $HOME/.m2:/root/.m2'
-                    label 'docker-agent'
-                }
-            }
             steps {
-                sh 'mvn test'
+                script {
+                    // Run tests in same Maven container
+                    docker.image('maven:3.8.6-jdk-11').inside('-v $HOME/.m2:/root/.m2') {
+                        sh 'mvn test'
+                    }
+                }
             }
         }
 
         stage('Deploy') {
-            agent {
-                label 'docker-agent'
-            }
             steps {
                 script {
+                    // Build Docker image
                     docker.build("carrental-app:latest")
+                    
+                    // Run the application container
                     docker.image('carrental-app:latest').run('-p 3000:3000 --name carrental')
                 }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline completed - cleaning up'
+            script {
+                // Clean up containers
+                sh 'docker stop carrental || true'
+                sh 'docker rm carrental || true'
             }
         }
     }

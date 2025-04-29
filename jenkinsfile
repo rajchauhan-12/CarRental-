@@ -1,6 +1,10 @@
 pipeline {
     agent any
     
+    tools {
+        git 'Default' // Make sure this matches your Git tool name in Jenkins Global Tool Configuration
+    }
+    
     environment {
         DOCKER_IMAGE = 'carrental-app'
         DOCKER_TAG = 'latest'
@@ -9,36 +13,69 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/rajchauhan-12/CarRental-.git'
-            }
-        }
-        
-        stage('Build') {
-            steps {
                 script {
-                    docker.build("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}", ".")
+                    // Clean workspace before checkout
+                    cleanWs()
+                    
+                    // Checkout with retry for Windows stability
+                    retry(3) {
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: '*/main']],
+                            extensions: [[$class: 'CloneOption', depth: 1, timeout: 30]],
+                            userRemoteConfigs: [[
+                                url: 'https://github.com/rajchauhan-12/CarRental-.git',
+                                credentialsId: '' // Add if private repo
+                            ]]
+                        ])
+                    }
                 }
             }
         }
         
-        stage('Test') {
+        stage('Build Docker Image') {
             steps {
-                sh 'echo "Running tests..."'
-                // Add your actual test commands here
-                // For example: sh 'mvn test' or 'npm test'
+                script {
+                    // Build with cache for faster builds
+                    docker.build("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}", "--build-arg BUILDKIT_INLINE_CACHE=1 .")
+                }
             }
         }
         
-        stage('Deploy') {
+        stage('Run Tests') {
             steps {
                 script {
-                    // Stop and remove if container already exists
-                    sh 'docker stop ${DOCKER_IMAGE} || true'
-                    sh 'docker rm ${DOCKER_IMAGE} || true'
+                    // Run tests inside a Docker container
+                    docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").inside {
+                        // For Node.js projects (modify for your tech stack)
+                        sh 'npm test'
+                        
+                        // For Java projects:
+                        // sh 'mvn test'
+                        
+                        // For Python projects:
+                        // sh 'pytest'
+                    }
+                }
+            }
+            post {
+                always {
+                    junit '**/test-results/*.xml' // Update path to your test results
+                }
+            }
+        }
+        
+        stage('Deploy to Localhost') {
+            steps {
+                script {
+                    // Stop and remove existing container if running
+                    bat 'docker stop ${DOCKER_IMAGE} || exit 0'
+                    bat 'docker rm ${DOCKER_IMAGE} || exit 0'
                     
-                    // Run the container
-                    docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").run(
-                        "-p 3000:3000 --name ${env.DOCKER_IMAGE}"
+                    // Run new container with proper Windows path formatting
+                    docker.run(
+                        "${env.DOCKER_IMAGE}:${env.DOCKER_TAG}",
+                        "--name ${env.DOCKER_IMAGE} -p 3000:3000 -d --restart unless-stopped"
                     )
                 }
             }
@@ -47,13 +84,19 @@ pipeline {
     
     post {
         always {
-            echo 'Pipeline completed'
+            echo 'Pipeline completed - cleaning up'
+            script {
+                // Clean up unused Docker containers and images
+                bat 'docker system prune -f || exit 0'
+            }
         }
         success {
             echo 'Pipeline succeeded!'
+            // Optional: Add notification (email, Slack, etc.)
         }
         failure {
             echo 'Pipeline failed!'
+            // Optional: Add failure notification
         }
     }
 }

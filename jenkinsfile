@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_IMAGE = 'carrental-app'
+        DOCKER_TAG = 'latest'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/rajchauhan-12/CarRental-.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    docker.build("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}", ".")
+                }
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                sh 'echo "Running tests..."'
+                // Add your actual test commands here
+                // For example: sh 'mvn test' or 'npm test'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                script {
+                    // Stop and remove if container already exists
+                    sh 'docker stop ${DOCKER_IMAGE} || true'
+                    sh 'docker rm ${DOCKER_IMAGE} || true'
+                    
+                    // Run the container
+                    docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").run(
+                        "-p 3000:3000 --name ${env.DOCKER_IMAGE}"
+                    )
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo 'Pipeline completed'
+        }
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}

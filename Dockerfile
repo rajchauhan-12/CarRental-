@@ -1,5 +1,3 @@
-# Use appropriate base image based on your tech stack
-# For Node.js application:
 FROM node:14
 
 WORKDIR /app
@@ -10,5 +8,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
-
 CMD ["npm", "start"]

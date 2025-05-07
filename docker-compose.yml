@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  carrental-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: carrental-app
+    ports:
+      - "3000:3000"  # Change port if your app uses a different one
+    volumes:
+      - .:/app
+    restart: always
